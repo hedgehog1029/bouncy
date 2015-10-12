@@ -1,0 +1,62 @@
+<!-- Video ID: 0_bx8bnCoiU -->
+
+<html>
+	<head>
+		<title>Bouncy Balls</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="player" id="player">
+		</div>
+		<div id="loader" class="loader"></div>
+		<div id="quality" class="slideup"></div>
+	</body>
+
+	<script type="text/javascript">
+		var tag = document.createElement('script');
+  		tag.src = "https://www.youtube.com/player_api";
+  		var firstScriptTag = document.getElementsByTagName('script')[0];
+  		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  		var player;
+  		function onYouTubePlayerAPIReady() {
+  			player = new YT.Player('player', {
+  				height: window.innerHeight,
+  				width: window.innerWidth,
+  				videoId: '0_bx8bnCoiU',
+  				playerVars: {
+  					"controls": 0,
+  					"loop": 1,
+  					"showinfo": 0
+  				},
+  				events: {
+  					'onReady': ready,
+  					'onStateChange': stateChange
+  				}
+  			});
+  		}
+
+  		function ready(event) {
+  			event.target.setPlaybackQuality("default");
+  			event.target.playVideo();
+  		}
+
+  		function stateChange(event) {
+  			if (event.data == 0) {
+  				event.target.playVideo();
+  			}
+  			if (event.data == 1) {
+  				document.getElementById('loader').style = "display: none;"
+  				document.getElementById('quality').innerHTML = "Quality: " + event.target.getPlaybackQuality();
+  				document.getElementById('quality').className = "";
+  				setTimeout(function() {
+  					document.getElementById('quality').className = "slideup";
+  				}, 3000);
+  			}
+  		}
+
+  		window.onresize = function(e) {
+  			player.setSize(window.innerWidth, window.innerHeight);
+  		}
+	</script>
+</html>
